@@ -10,6 +10,8 @@
     "testDB": "db-migrate --env placeholder db:create store_test_db",
     "migrateUp": "cross-env ENV=dev db-migrate --env dev up",
     "migrateDown": "cross-env ENV=dev db-migrate --env dev down",
+    "migrateUpTest": "cross-env ENV=test db-migrate --env test up",
+    "migrateDownTest": "cross-env ENV=test db-migrate --env test down",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
     "test": "jasmine-ts",
     "tsc": "tsc"
