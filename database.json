@@ -1,0 +1,16 @@
+{
+    "dev": {
+      "driver": "pg",
+      "host": "localhost",
+      "database": "store_front_db",
+      "user": "postgres",
+      "password": "passageword"
+    },
+    "test": {
+      "driver": "pg",
+      "host": "localhost",
+      "database": "fantasy_worlds_test",
+      "user": "test_user",
+      "password": "password123"
+    }
+  }
