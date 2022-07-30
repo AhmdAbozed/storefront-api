@@ -6,6 +6,10 @@
   "type": "module",
   "scripts": {
     "start": "npx ts-node src/server.ts",
+    "DB": "db-migrate --env placeholder db:create store_front_db",
+    "testDB": "db-migrate --env placeholder db:create store_test_db",
+    "migrateUp": "cross-env ENV=dev db-migrate --env dev up",
+    "migrateDown": "cross-env ENV=dev db-migrate --env dev down",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
     "test": "jasmine-ts",
     "tsc": "tsc"
@@ -14,6 +18,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.0",
+    "cross-env": "^7.0.3",
     "db-migrate": "^0.11.13",
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^16.0.1",

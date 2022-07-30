@@ -1,4 +1,10 @@
 {
+    "placeholder":{
+      "driver": "pg",
+      "host": "localhost",
+      "user": "postgres",
+      "password": "passageword"
+    },
     "dev": {
       "driver": "pg",
       "host": "localhost",
@@ -9,8 +15,8 @@
     "test": {
       "driver": "pg",
       "host": "localhost",
-      "database": "fantasy_worlds_test",
-      "user": "test_user",
-      "password": "password123"
+      "database": "store_test_db",
+      "user": "testuser",
+      "password": "passageword"
     }
   }
