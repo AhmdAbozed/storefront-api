@@ -48,6 +48,20 @@ export class productsStore{
          catch(err){
              throw new Error(`${err}`)
          }
+    }
+
+    async read(id: string):Promise<product>{
+        try {
+         const conn = await client.connect();
+         const sql = 'SELECT FROM products WHERE id=($1)';
+         const results = await conn.query(sql,[id]);
+         conn.release();
+         //@ts-ignore
+         return results;
      }
+         catch(err){
+             throw new Error(`${err}`)
+         }
+    }
 }
 

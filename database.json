@@ -16,7 +16,7 @@
       "driver": "pg",
       "host": "localhost",
       "database": "store_test_db",
-      "user": "testuser",
+      "user": "postgres",
       "password": "passageword"
     }
   }
