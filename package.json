@@ -5,7 +5,7 @@
   "main": "server.ts",
   "type": "module",
   "scripts": {
-    "start": "npx ts-node src/server.ts",
+    "start": "cross-env ENV=dev npx ts-node src/server.ts",
     "DB": "db-migrate --env placeholder db:create store_front_db",
     "testDB": "db-migrate --env placeholder db:create store_test_db",
     "migrateUp": "cross-env ENV=dev db-migrate --env dev up",
@@ -13,8 +13,8 @@
     "migrateUpTest": "cross-env ENV=test db-migrate --env test up",
     "migrateDownTest": "cross-env ENV=test db-migrate --env test down",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
-    "test": "jasmine-ts",
-    "tsc": "tsc"
+    "test": "tsc && jasmine",
+    "migrateTest": "npm run migrateUpTest && npm run test && npm run migrateDownTest"
   },
   "author": "Udacity",
   "license": "ISC",
