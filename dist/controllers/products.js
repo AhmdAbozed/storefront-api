@@ -36,8 +36,32 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 import { productsStore } from "../models/products.js";
 var store = new productsStore();
+var create = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var product, sproduct, err_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                product = {
+                    id: req.body.id,
+                    name: req.body.name,
+                    price: req.body.price
+                };
+                console.log(product);
+                return [4 /*yield*/, store.create(product)];
+            case 1:
+                sproduct = _a.sent();
+                res.send(JSON.stringify(sproduct));
+                return [3 /*break*/, 3];
+            case 2:
+                err_1 = _a.sent();
+                throw new Error("product creation error:".concat(err_1));
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
 var index = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var products, err_1;
+    var products, err_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -48,33 +72,8 @@ var index = function (_req, res) { return __awaiter(void 0, void 0, void 0, func
                 res.send(JSON.stringify(products));
                 return [3 /*break*/, 3];
             case 2:
-                err_1 = _a.sent();
-                throw new Error("products index error: ".concat(err_1));
-            case 3: return [2 /*return*/];
-        }
-    });
-}); };
-var create = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var product, sproduct, err_2;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                console.log(req);
-                product = {
-                    id: req.body.id,
-                    name: req.body.name,
-                    price: req.body.price
-                };
-                console.log(product);
-                return [4 /*yield*/, store.create(product)];
-            case 1:
-                sproduct = _a.sent();
-                res.send(JSON.stringify(product));
-                return [3 /*break*/, 3];
-            case 2:
                 err_2 = _a.sent();
-                throw new Error("product creation error:".concat(err_2));
+                throw new Error("products index error: ".concat(err_2));
             case 3: return [2 /*return*/];
         }
     });
@@ -98,8 +97,28 @@ var remove = function (req, res) { return __awaiter(void 0, void 0, void 0, func
         }
     });
 }); };
+var read = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var product, err_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                console.log(req.params.id);
+                return [4 /*yield*/, store.read(req.params.id)];
+            case 1:
+                product = _a.sent();
+                res.send(JSON.stringify(product));
+                return [3 /*break*/, 3];
+            case 2:
+                err_4 = _a.sent();
+                throw new Error("product deletion error:".concat(err_4));
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
 var productsRoutes = function (app) {
     app.get('/products', index);
+    app.get('/products/:id', read);
     app.post('/products', create);
     app.post('/products/remove/:id', remove);
 };

@@ -14,7 +14,7 @@
     "migrateDownTest": "cross-env ENV=test db-migrate --env test down",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
     "test": "tsc && jasmine",
-    "migrateTest": "npm run migrateUpTest && npm run test && npm run migrateDownTest"
+    "migrateTest": "npm run migrateUpTest && (npm run test || npm run migrateDownTest) && npm run migrateDownTest"
   },
   "author": "Udacity",
   "license": "ISC",

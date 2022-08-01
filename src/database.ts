@@ -16,8 +16,10 @@ const {
     PG_PASS,
     ENV
 } = process.env
+
+
+
 if (ENV == 'dev'){
-    console.log("hailing from dev database.ts")
  client = new Pool({
     host: PG_HOST,
     database: PG_DB,
@@ -27,7 +29,7 @@ if (ENV == 'dev'){
 }
 
 if (ENV == 'test'){
-     client = new Pool({
+    client = new Pool({
         host: PG_HOST,
         database: PG_TEST_DB,
         user: PG_USER,
