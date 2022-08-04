@@ -7,14 +7,14 @@ These are the notes from a meeting with the frontend developer that describe wha
 ### Products
 - Index(route: 'products' [GET])
 - Show(route: 'products/:id' [GET])
-- Create(route: 'products/create' [POST]) [token required]
+- Create(route: 'products' [POST]) [token required]
 - [OPTIONAL] Top 5 most popular products 
 - [OPTIONAL] Products by category (args: product category)
 
 ### Users
 - Index(route: 'users' [GET]) [token required]
 - Show(route: 'users/:id' [GET]) [token required]
-- Create(route: 'users/create' [GET]) [token required]
+- Create(route: 'users' [POST]) [token required]
 
 ### Orders
 - Current Order by user(route: 'order/:id' [GET]) (args: user id)[token required]

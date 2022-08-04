@@ -30,7 +30,7 @@ export class productsStore {
             const sql = 'INSERT INTO products (name, price) VALUES ($1, $2) RETURNING *';
             const results = await conn.query(sql, [product.name, product.price]);
             conn.release();
-            console.log("MOD CREATE: " + results.rows[0])
+            console.log("MOD PRODUCT CREATE: " + results.rows[0])
             //@ts-ignore
             return results.rows[0];
         }
