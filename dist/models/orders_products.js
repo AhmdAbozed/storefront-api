@@ -35,10 +35,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import client from '../database.js';
-var productsStore = /** @class */ (function () {
-    function productsStore() {
+var orders_productsStore = /** @class */ (function () {
+    function orders_productsStore() {
     }
-    productsStore.prototype.index = function () {
+    orders_productsStore.prototype.create = function (user_id, order_id, product_id) {
         return __awaiter(this, void 0, void 0, function () {
             var conn, sql, results, err_1;
             return __generator(this, function (_a) {
@@ -48,14 +48,14 @@ var productsStore = /** @class */ (function () {
                         return [4 /*yield*/, client.connect()];
                     case 1:
                         conn = _a.sent();
-                        sql = 'SELECT * FROM products';
-                        return [4 /*yield*/, conn.query(sql)];
+                        sql = 'INSERT INTO orders_products (user_id, order_id, product_id) VALUES ($1, $2, $3) RETURNING *';
+                        return [4 /*yield*/, conn.query(sql, [user_id, order_id, product_id])];
                     case 2:
                         results = _a.sent();
                         conn.release();
-                        console.log("MOD INDEX: " + results.rows);
+                        console.log("MOD ORDERS_PRODUCTS CREATE: " + results.rows[0]);
                         //@ts-ignore
-                        return [2 /*return*/, results.rows];
+                        return [2 /*return*/, results.rows[0]];
                     case 3:
                         err_1 = _a.sent();
                         throw new Error("".concat(err_1));
@@ -64,25 +64,24 @@ var productsStore = /** @class */ (function () {
             });
         });
     };
-    productsStore.prototype.create = function (product) {
+    orders_productsStore.prototype.productsByOrder = function (order_id) {
         return __awaiter(this, void 0, void 0, function () {
             var conn, sql, results, err_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        console.log("gotten product at creation: " + JSON.stringify(product));
                         return [4 /*yield*/, client.connect()];
                     case 1:
                         conn = _a.sent();
-                        sql = 'INSERT INTO products (name, price) VALUES ($1, $2) RETURNING *';
-                        return [4 /*yield*/, conn.query(sql, [product.name, product.price])];
+                        sql = 'SELECT * FROM orders_products WHERE order_id=($1)';
+                        return [4 /*yield*/, conn.query(sql, [order_id])];
                     case 2:
                         results = _a.sent();
                         conn.release();
-                        console.log("MOD PRODUCT CREATE: " + results.rows[0]);
+                        console.log("MOD productsByOrder: " + results.rows);
                         //@ts-ignore
-                        return [2 /*return*/, results.rows[0]];
+                        return [2 /*return*/, results.rows];
                     case 3:
                         err_2 = _a.sent();
                         throw new Error("".concat(err_2));
@@ -91,59 +90,6 @@ var productsStore = /** @class */ (function () {
             });
         });
     };
-    productsStore.prototype.read = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            var conn, sql, results, err_3;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, client.connect()];
-                    case 1:
-                        conn = _a.sent();
-                        sql = 'SELECT * FROM products WHERE id=($1)';
-                        return [4 /*yield*/, conn.query(sql, [id])];
-                    case 2:
-                        results = _a.sent();
-                        conn.release();
-                        console.log("MOD READ: " + results.rows[0]);
-                        //@ts-ignore
-                        return [2 /*return*/, results.rows[0]];
-                    case 3:
-                        err_3 = _a.sent();
-                        throw new Error("".concat(err_3));
-                    case 4: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    //not in REQUIREMENTS
-    productsStore.prototype.delete = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            var conn, sql, results, err_4;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, client.connect()];
-                    case 1:
-                        conn = _a.sent();
-                        sql = 'DELETE FROM products WHERE id=($1) RETURNING *';
-                        console.log("without number: " + id + " with number: " + Number(id));
-                        return [4 /*yield*/, conn.query(sql, [Number(id)])];
-                    case 2:
-                        results = _a.sent();
-                        conn.release();
-                        //@ts-ignore
-                        return [2 /*return*/, results];
-                    case 3:
-                        err_4 = _a.sent();
-                        throw new Error("".concat(err_4));
-                    case 4: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    return productsStore;
+    return orders_productsStore;
 }());
-export { productsStore };
+export { orders_productsStore };
