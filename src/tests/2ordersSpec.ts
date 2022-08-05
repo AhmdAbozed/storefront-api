@@ -6,11 +6,6 @@ const store = new ordersStore();
 
 const userStore = new usersStore();
 
-const order: order = {
-    id: 1,
-    user_id: 1,    
-}
-
 const user: user = {
     id: 2,
     firstName: "testingfirstname",
@@ -20,17 +15,15 @@ const user: user = {
 
 describe("orders Model", ()=>{
 
-    it('create method should create order', async () => {
-        const result = await store.create('1'); 
-        console.log("READ: "+result)
+    it('create method for orders', async () => {
+        const result = await store.create('1', 'active');
         expect(result.user_id).toEqual(1)
     });
 
-    it('ordersByUser method should return orders', async () => {
+    it('ordersByUser method should return orders made by a user', async () => {
+        //To ensure a user exists for referencing, a user row is created prior to the read method
         const createUser = await userStore.create(user);
         const result = await store.ordersByUser('1');
-        console.log("orders test result: "+result);
-        console.log("orders test result: "+result[0]);
         expect(result[0]).toBeDefined(); 
     })
 })

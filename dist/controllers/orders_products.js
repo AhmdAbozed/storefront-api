@@ -42,7 +42,7 @@ var create = function (req, res) { return __awaiter(void 0, void 0, void 0, func
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, store.create(req.params.user_id, req.params.order_id, req.params.product_id)];
+                return [4 /*yield*/, store.create(req.params.user_id, req.params.order_id, req.params.product_id, req.params.quantity)];
             case 1:
                 sproduct = _a.sent();
                 res.send(JSON.stringify(sproduct));
@@ -75,6 +75,6 @@ var productsByOrder = function (req, res) { return __awaiter(void 0, void 0, voi
 }); };
 var orders_productsRoutes = function (app) {
     app.get('/orders_products/:id', productsByOrder);
-    app.post('/orders_products/:user_id&:order_id&:product_id', create);
+    app.post('/orders_products/:user_id&:order_id&:product_id&:quantity', create);
 };
 export default orders_productsRoutes;

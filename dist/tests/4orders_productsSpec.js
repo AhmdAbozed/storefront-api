@@ -47,7 +47,7 @@ describe("orders Model", function () {
         var result;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, store.create('1', '1', '1')];
+                case 0: return [4 /*yield*/, store.create('1', '1', '1', '1')];
                 case 1:
                     result = _a.sent();
                     console.log("CREATE ORDER PRODUCT: " + result);

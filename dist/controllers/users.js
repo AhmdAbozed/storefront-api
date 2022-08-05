@@ -35,9 +35,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import { usersStore } from "../models/users.js";
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
+dotenv.config();
 var store = new usersStore();
+var tokenSecret = process.env.tokenSecret;
 var create = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, suser, err_1;
+    var user, suser, token, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -52,7 +56,8 @@ var create = function (req, res) { return __awaiter(void 0, void 0, void 0, func
                 return [4 /*yield*/, store.create(user)];
             case 1:
                 suser = _a.sent();
-                res.send(JSON.stringify(suser));
+                token = jwt.sign({ user: suser }, tokenSecret);
+                res.send(token);
                 return [3 /*break*/, 3];
             case 2:
                 err_1 = _a.sent();
@@ -117,10 +122,21 @@ var read = function (req, res) { return __awaiter(void 0, void 0, void 0, functi
         }
     });
 }); };
-var usersRoutes = function (app) {
-    app.get('/users', index);
-    app.get('/users/:id', read);
-    app.post('/users', create);
-    app.post('/users/remove/:id', remove);
+var verifyAuthToken = function (req, res, next) {
+    try {
+        var token = req.body.token;
+        var decoded = jwt.verify(token, tokenSecret);
+        next();
+    }
+    catch (error) {
+        res.status(401);
+        res.send("JWT auth failed.");
+    }
 };
-export default usersRoutes;
+var usersRoutes = function (app) {
+    app.get('/users', verifyAuthToken, index);
+    app.get('/users/:id', verifyAuthToken, read);
+    app.post('/users', create);
+    app.post('/users/remove/:id', verifyAuthToken, remove);
+};
+export { usersRoutes, verifyAuthToken };

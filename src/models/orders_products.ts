@@ -9,13 +9,12 @@ export type order_product = {
 
 export class orders_productsStore {
 
-    async create(user_id: string, order_id: string, product_id: string): Promise<order_product> {
+    async create(user_id: string, order_id: string, product_id: string, quantity: string): Promise<order_product> {
         try {
             const conn = await client.connect();
-            const sql = 'INSERT INTO orders_products (user_id, order_id, product_id) VALUES ($1, $2, $3) RETURNING *';
-            const results = await conn.query(sql, [user_id, order_id, product_id]);
+            const sql = 'INSERT INTO orders_products (user_id, order_id, product_id, quantity) VALUES ($1, $2, $3, $4) RETURNING *';
+            const results = await conn.query(sql, [user_id, order_id, product_id, quantity]);
             conn.release();
-            console.log("MOD ORDERS_PRODUCTS CREATE: " + results.rows[0])
             //@ts-ignore
             return results.rows[0];
         }
@@ -31,7 +30,6 @@ export class orders_productsStore {
             const sql = 'SELECT * FROM orders_products WHERE order_id=($1)';
             const results = await conn.query(sql,[order_id]);
             conn.release();
-            console.log("MOD productsByOrder: " + results.rows)
             //@ts-ignore
             return results.rows;
         }
@@ -39,4 +37,6 @@ export class orders_productsStore {
             throw new Error(`${err}`)
         }
     }
+
+    
 }

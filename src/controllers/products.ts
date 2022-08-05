@@ -1,7 +1,7 @@
 import { product, productsStore } from "../models/products.js"
 import express from "express"
 import { Request, Response } from 'express'
-
+import { verifyAuthToken } from "./users.js"
 const store = new productsStore()
 
 
@@ -12,7 +12,6 @@ const create = async (req: Request, res: Response) => {
       name: req.body.name,
       price: req.body.price
     }
-    console.log(product)
     const sproduct = await store.create(product)
 
     res.send(JSON.stringify(sproduct));
@@ -36,7 +35,7 @@ const index = async (_req: Request, res: Response) => {
 
 const remove = async (req: Request, res: Response) => {
   try {
-    console.log(req.params.id)
+
     const product = await store.delete(req.params.id)
 
     res.send(JSON.stringify(product));
@@ -48,7 +47,6 @@ const remove = async (req: Request, res: Response) => {
 
 const read = async (req: Request, res: Response) => {
   try {
-    console.log(req.params.id)
     const product = await store.read(req.params.id)
 
     res.send(JSON.stringify(product));
@@ -61,8 +59,8 @@ const read = async (req: Request, res: Response) => {
 const productsRoutes = (app: express.Application)=>{
   app.get('/products', index);
   app.get('/products/:id', read);
-  app.post('/products', create);
-  app.post('/products/remove/:id', remove);
+  app.post('/products', verifyAuthToken, create);
+  app.post('/products/remove/:id', verifyAuthToken, remove);
 }
 
 export default productsRoutes

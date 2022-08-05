@@ -35,6 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import { productsStore } from "../models/products.js";
+import { verifyAuthToken } from "./users.js";
 var store = new productsStore();
 var create = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var product, sproduct, err_1;
@@ -119,7 +120,7 @@ var read = function (req, res) { return __awaiter(void 0, void 0, void 0, functi
 var productsRoutes = function (app) {
     app.get('/products', index);
     app.get('/products/:id', read);
-    app.post('/products', create);
-    app.post('/products/remove/:id', remove);
+    app.post('/products', verifyAuthToken, create);
+    app.post('/products/remove/:id', verifyAuthToken, remove);
 };
 export default productsRoutes;

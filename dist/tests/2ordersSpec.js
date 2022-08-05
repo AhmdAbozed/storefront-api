@@ -38,10 +38,6 @@ import { ordersStore } from "../models/orders.js";
 import { usersStore } from "../models/users.js";
 var store = new ordersStore();
 var userStore = new usersStore();
-var order = {
-    id: 1,
-    user_id: 1,
-};
 var user = {
     id: 2,
     firstName: "testingfirstname",
@@ -49,11 +45,11 @@ var user = {
     password: "testingpassword"
 };
 describe("orders Model", function () {
-    it('create method should create order', function () { return __awaiter(void 0, void 0, void 0, function () {
+    it('create method for orders', function () { return __awaiter(void 0, void 0, void 0, function () {
         var result;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, store.create('1')];
+                case 0: return [4 /*yield*/, store.create('1', 'active')];
                 case 1:
                     result = _a.sent();
                     console.log("READ: " + result);
@@ -62,7 +58,7 @@ describe("orders Model", function () {
             }
         });
     }); });
-    it('ordersByUser method should return orders', function () { return __awaiter(void 0, void 0, void 0, function () {
+    it('ordersByUser method should return orders made by a user', function () { return __awaiter(void 0, void 0, void 0, function () {
         var createUser, result;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -72,8 +68,6 @@ describe("orders Model", function () {
                     return [4 /*yield*/, store.ordersByUser('1')];
                 case 2:
                     result = _a.sent();
-                    console.log("orders test result: " + result);
-                    console.log("orders test result: " + result[0]);
                     expect(result[0]).toBeDefined();
                     return [2 /*return*/];
             }

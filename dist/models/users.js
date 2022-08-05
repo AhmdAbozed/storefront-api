@@ -35,6 +35,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import client from '../database.js';
+import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
+dotenv.config();
+var _a = process.env, pepper = _a.pepper, saltRounds = _a.saltRounds, bcryptPass = _a.bcryptPass, tokenSecret = _a.tokenSecret;
 var usersStore = /** @class */ (function () {
     function usersStore() {
     }
@@ -66,7 +70,7 @@ var usersStore = /** @class */ (function () {
     };
     usersStore.prototype.create = function (user) {
         return __awaiter(this, void 0, void 0, function () {
-            var conn, sql, results, err_2;
+            var conn, hash, sql, results, err_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -75,8 +79,10 @@ var usersStore = /** @class */ (function () {
                         return [4 /*yield*/, client.connect()];
                     case 1:
                         conn = _a.sent();
+                        hash = bcrypt.hashSync(user.password + pepper, Number(saltRounds));
+                        console.log("hashish " + hash);
                         sql = 'INSERT INTO users ("firstName", "lastName", "password") VALUES ($1, $2, $3) RETURNING *';
-                        return [4 /*yield*/, conn.query(sql, [user.firstName, user.lastName, user.password])];
+                        return [4 /*yield*/, conn.query(sql, [user.firstName, user.lastName, hash])];
                     case 2:
                         results = _a.sent();
                         conn.release();

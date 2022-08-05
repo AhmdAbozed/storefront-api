@@ -48,52 +48,55 @@ describe("users Model", function () {
         expect(store.index && store.create && store.read).toBeDefined();
     });
     it('create method should add a user', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var result;
+        var result, pass;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, store.create(user)];
                 case 1:
                     result = _a.sent();
+                    pass = result.password;
                     expect(result).toEqual({
                         id: 1,
                         firstName: "testingfirstname",
                         lastName: "testinglastname",
-                        password: "testingpassword"
+                        password: pass
                     });
                     return [2 /*return*/];
             }
         });
     }); });
     it('index method should return users', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var result;
+        var result, pass;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, store.index()];
                 case 1:
                     result = _a.sent();
+                    pass = result[0].password;
                     expect(result[0]).toEqual({
                         id: 1,
                         firstName: "testingfirstname",
                         lastName: "testinglastname",
-                        password: "testingpassword"
+                        password: pass
                     });
                     return [2 /*return*/];
             }
         });
     }); });
     it('read method should read correct user', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var result;
+        var result, pass;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, store.read('1')];
                 case 1:
                     result = _a.sent();
                     console.log("USER TEST READ: " + result);
+                    pass = result.password;
                     expect(result).toEqual({
                         id: 1,
                         firstName: "testingfirstname",
                         lastName: "testinglastname",
-                        password: "testingpassword"
+                        password: pass
                     });
                     return [2 /*return*/];
             }

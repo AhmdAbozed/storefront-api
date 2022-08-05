@@ -35,6 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import { ordersStore } from "../models/orders.js";
+import { verifyAuthToken } from "./users.js";
 var store = new ordersStore();
 var create = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var sproduct, err_1;
@@ -42,7 +43,7 @@ var create = function (req, res) { return __awaiter(void 0, void 0, void 0, func
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, store.create(req.params.user_id)];
+                return [4 /*yield*/, store.create(req.params.user_id, "active")];
             case 1:
                 sproduct = _a.sent();
                 res.send(JSON.stringify(sproduct));
@@ -74,7 +75,7 @@ var ordersByUser = function (req, res) { return __awaiter(void 0, void 0, void 0
     });
 }); };
 var productsRoutes = function (app) {
-    app.get('/orders/:id', ordersByUser);
-    app.post('/orders/:user_id', create);
+    app.get('/orders/:id', verifyAuthToken, ordersByUser);
+    app.post('/orders/:user_id', verifyAuthToken, create);
 };
 export default productsRoutes;

@@ -2,12 +2,13 @@
 import { order, ordersStore } from "../models/orders.js"
 import express from "express"
 import { Request, Response } from 'express'
+import { verifyAuthToken } from "./users.js"
 
 const store = new ordersStore()
 
 const create = async (req: Request, res: Response) => {
   try {
-    const sproduct = await store.create(req.params.user_id)
+    const sproduct = await store.create(req.params.user_id, "active")
 
     res.send(JSON.stringify(sproduct));
   }
@@ -18,7 +19,6 @@ const create = async (req: Request, res: Response) => {
 
 const ordersByUser = async (req: Request, res: Response) => {
     try {
-      console.log(req.params.id)
       const product = await store.ordersByUser(req.params.id)
   
       res.send(JSON.stringify(product));
@@ -29,8 +29,8 @@ const ordersByUser = async (req: Request, res: Response) => {
   }
 
   const productsRoutes = (app: express.Application)=>{
-    app.get('/orders/:id', ordersByUser);
-    app.post('/orders/:user_id', create);
+    app.get('/orders/:id', verifyAuthToken, ordersByUser);
+    app.post('/orders/:user_id', verifyAuthToken, create);
   }
 
   export default productsRoutes;

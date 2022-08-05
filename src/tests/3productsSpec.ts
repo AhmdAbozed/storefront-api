@@ -38,8 +38,7 @@ describe("Products Model", ()=>{
 
 
     it('read method should read correct product', async () => {
-        const result = await store.read('1'); 
-        console.log("READ: "+result)
+        const result = await store.read('1');
         result.price = Number(result.price)
 
         expect(result).toEqual({
