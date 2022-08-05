@@ -2,10 +2,15 @@ import express from 'express'
 import { Request, Response } from 'express'
 import bodyParser from 'body-parser'
 import catalog from './routes/catalog.js'
-
+import cors from 'cors'
 const app = express()
 const address: string = "http://localhost:3000"
 
+const corsOptions = {
+    optionsSuccessStatus: 200
+}
+
+app.use(cors(corsOptions))
 app.use(bodyParser.json())
 
 app.get('/', function (req: Request, res: Response) {

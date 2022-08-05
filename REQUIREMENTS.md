@@ -14,7 +14,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 ### Users
 - Index(route: 'users' [GET]) [token required]
 - Show(route: 'users/:id' [GET]) [token required]
-- Create(route: 'users' [POST]) [token required]
+- Create(route: 'users' [POST]) [token required] [token's created here]
 
 ### Orders
 - Current Order by user(route: 'order/:id' [GET]) (args: user id)[token required]
@@ -40,7 +40,7 @@ Table: Users (id:varchar, firstName:varchar, lastName:varchar, password:varchar)
 - status of order (active or complete)
 
 Table: Users (id:varchar, user_id:string[foreign key to users table], status:varchar(active or complete))
-### Order-Product
+### orders-products
 - id
 - user_id
 - order_id
@@ -53,6 +53,5 @@ Table: order-product (
     user_id:string[foreign key to users table],
     order_id:string[foreign key to orders table],
     product_id:string[foreign key to product table],
-    quantity:varchar,
-    status:varchar(active or complete)
+    quantity:varchar
     )

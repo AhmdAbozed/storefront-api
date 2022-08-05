@@ -106,7 +106,6 @@ var productsStore = /** @class */ (function () {
                     case 2:
                         results = _a.sent();
                         conn.release();
-                        console.log("MOD READ: " + results.rows[0]);
                         //@ts-ignore
                         return [2 /*return*/, results.rows[0]];
                     case 3:
@@ -129,7 +128,6 @@ var productsStore = /** @class */ (function () {
                     case 1:
                         conn = _a.sent();
                         sql = 'DELETE FROM products WHERE id=($1) RETURNING *';
-                        console.log("without number: " + id + " with number: " + Number(id));
                         return [4 /*yield*/, conn.query(sql, [Number(id)])];
                     case 2:
                         results = _a.sent();

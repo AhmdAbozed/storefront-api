@@ -38,7 +38,7 @@ import client from '../database.js';
 var ordersStore = /** @class */ (function () {
     function ordersStore() {
     }
-    ordersStore.prototype.create = function (user_id) {
+    ordersStore.prototype.create = function (user_id, status) {
         return __awaiter(this, void 0, void 0, function () {
             var conn, sql, results, err_1;
             return __generator(this, function (_a) {
@@ -48,8 +48,8 @@ var ordersStore = /** @class */ (function () {
                         return [4 /*yield*/, client.connect()];
                     case 1:
                         conn = _a.sent();
-                        sql = 'INSERT INTO orders (user_id) VALUES ($1) RETURNING *';
-                        return [4 /*yield*/, conn.query(sql, [user_id])];
+                        sql = 'INSERT INTO orders (user_id, status) VALUES ($1, $2) RETURNING *';
+                        return [4 /*yield*/, conn.query(sql, [user_id, status])];
                     case 2:
                         results = _a.sent();
                         conn.release();

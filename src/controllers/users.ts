@@ -1,8 +1,14 @@
 import { user, usersStore } from "../models/users.js"
 import express from "express"
 import { Request, Response } from 'express'
+import dotenv from 'dotenv'
+import jwt from 'jsonwebtoken'
+
+dotenv.config()
 
 const store = new usersStore()
+
+const {tokenSecret} = process.env
 
 const create = async (req: Request, res: Response) => {
   try {
@@ -12,10 +18,9 @@ const create = async (req: Request, res: Response) => {
       lastName: req.body.lastName,
       password: req.body.password
     }
-    console.log(user)
     const suser = await store.create(user)
-
-    res.send(JSON.stringify(suser));
+    const token = jwt.sign({user: suser}, tokenSecret as string)
+    res.send(token);
   }
   catch (err) {
     throw new Error(`user creation error:${err}`)
@@ -36,7 +41,6 @@ const index = async (_req: Request, res: Response) => {
 
 const remove = async (req: Request, res: Response) => {
   try {
-    console.log(req.params.id)
     const user = await store.delete(req.params.id)
 
     res.send(JSON.stringify(user));
@@ -48,7 +52,6 @@ const remove = async (req: Request, res: Response) => {
 
 const read = async (req: Request, res: Response) => {
   try {
-    console.log(req.params.id)
     const user = await store.read(req.params.id)
 
     res.send(JSON.stringify(user));
@@ -58,11 +61,22 @@ const read = async (req: Request, res: Response) => {
   }
 }
 
-const usersRoutes = (app: express.Application)=>{
-  app.get('/users', index);
-  app.get('/users/:id', read);
-  app.post('/users', create);
-  app.post('/users/remove/:id', remove);
+const verifyAuthToken = (req: Request, res: Response, next: ()=>void) => {
+  try {
+      const token = req.body.token
+      const decoded = jwt.verify(token, tokenSecret as string)
+      next()
+  } catch (error) {
+      res.status(401)
+      res.send("JWT auth failed.")
+  }
 }
 
-export default usersRoutes
+const usersRoutes = (app: express.Application)=>{
+  app.get('/users', verifyAuthToken, index);
+  app.get('/users/:id', verifyAuthToken, read);
+  app.post('/users', create);
+  app.post('/users/remove/:id', verifyAuthToken, remove);
+}
+
+export  {usersRoutes, verifyAuthToken}

@@ -1,4 +1,10 @@
 import client from '../database.js'
+import bcrypt from 'bcrypt'
+import dotenv from 'dotenv'
+
+dotenv.config()
+
+const {pepper, saltRounds, bcryptPass, tokenSecret} = process.env;
 
 export type user = {
     id: Number;
@@ -14,7 +20,6 @@ export class usersStore {
             const sql = 'SELECT * FROM users';
             const results = await conn.query(sql);
             conn.release();
-            console.log("MOD USER INDEX: " + results.rows)
             //@ts-ignore
             return results.rows;
         }
@@ -25,12 +30,14 @@ export class usersStore {
 
     async create(user: user): Promise<user> {
         try {
-            console.log("gotten user at creation: " + JSON.stringify(user))
             const conn = await client.connect();
+            const hash = bcrypt.hashSync(
+                user.password + pepper, 
+                Number(saltRounds)
+              );
             const sql = 'INSERT INTO users ("firstName", "lastName", "password") VALUES ($1, $2, $3) RETURNING *';
-            const results = await conn.query(sql, [user.firstName, user.lastName, user.password]);
+            const results = await conn.query(sql, [user.firstName, user.lastName, hash]);
             conn.release();
-            console.log("MOD USER CREATE: " + results.rows[0])
             //@ts-ignore
             return results.rows[0];
         }
@@ -45,7 +52,6 @@ export class usersStore {
             const sql = 'SELECT * FROM users WHERE id=($1)';
             const results = await conn.query(sql, [id]);
             conn.release();
-            console.log("MOD USERS READ: " + results.rows[0])
             //@ts-ignore
             return results.rows[0];
         }

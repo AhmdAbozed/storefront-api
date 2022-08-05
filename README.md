@@ -1,54 +1,69 @@
 # Storefront Backend Project
 
-## Getting Started
-
-This repo contains a basic Node and Express app to get you started in constructing an API. To get started, clone this repo and run `yarn` in your terminal at the project root.
-
 ## Required Technologies
-Your application must make use of the following libraries:
+
 - Postgres for the database
 - Node/Express for the application logic
 - dotenv from npm for managing environment variables
 - db-migrate from npm for migrations
 - jsonwebtoken from npm for working with JWTs
 - jasmine from npm for testing
+- bcrypt from npm for hashing
 
-## Steps to Completion
+## Scripts
+- DB:  creates the development DB, named store_front_db
+- testDB:  creates the testing DB, named store_test_db
+- migrateUp:  runs up migrations
+- migrateDown:  runs down migrations
+- start:  runs the server.ts file, port 3000
+- migrateTest:  switches to testing env then: migrates up, builds all ts, runs all spec tests, migrates down, on the testing DB
+- migrateUpTest:  switches to testing env then runs up migrations
+- migrateDownTest: switches to testing env then runs down migrations
 
-### 1. Plan to Meet Requirements
+## Instructions
+1. Run npm i, to install all the packages
 
-In this repo there is a `REQUIREMENTS.md` document which outlines what this API needs to supply for the frontend, as well as the agreed upon data shapes to be passed between front and backend. This is much like a document you might come across in real life when building or extending an API. 
+2. Set the PG_HOST, PG_USER, PG_PASS in .env and database.json
 
-Your first task is to read the requirements and update the document with the following:
-- Determine the RESTful route for each endpoint listed. Add the RESTful route and HTTP verb to the document so that the frontend developer can begin to build their fetch requests.    
-**Example**: A SHOW route: 'blogs/:id' [GET] 
+3. Run the script: DB, to create the main database.
 
-- Design the Postgres database tables based off the data shape requirements. Add to the requirements document the database tables and columns being sure to mark foreign keys.   
-**Example**: You can format this however you like but these types of information should be provided
-Table: Books (id:varchar, title:varchar, author:varchar, published_year:varchar, publisher_id:string[foreign key to publishers table], pages:number)
+4. Run the script: testDB, to create the testing database.
 
-**NOTE** It is important to remember that there might not be a one to one ratio between data shapes and database tables. Data shapes only outline the structure of objects being passed between frontend and API, the database may need multiple tables to store a single shape. 
+5. Run the script: migrateUp, for the up migrations
 
-### 2.  DB Creation and Migrations
+6. Run the script: build, for ts building
 
-Now that you have the structure of the databse outlined, it is time to create the database and migrations. Add the npm packages dotenv and db-migrate that we used in the course and setup your Postgres database. If you get stuck, you can always revisit the database lesson for a reminder. 
+7. Run the script: start, for starting the server
 
-You must also ensure that any sensitive information is hashed with bcrypt. If any passwords are found in plain text in your application it will not pass.
+8. Use Postman to send the post requests, as well as access pages requiring JWT. Otherwise browser can be used.
 
-### 3. Models
+9. create a user then add the response's token to requests requiring JWT
 
-Create the models for each database table. The methods in each model should map to the endpoints in `REQUIREMENTS.md`. Remember that these models should all have test suites and mocks.
+## Endpoints
 
-### 4. Express Handlers
+### 1. http://localhost:3000/users
+- users/ [GET][JWT]: returns all users in the DB
+- users/ [POST]: inserts the user object provided in request.body, into the DB  
 
-Set up the Express handlers to route incoming requests to the correct model method. Make sure that the endpoints you create match up with the enpoints listed in `REQUIREMENTS.md`. Endpoints must have tests and be CORS enabled. 
+    **User Object Example**: {"id": "1", "firstName": "first name", "lastName": "last name", "password": "pass"} 
 
-### 5. JWTs
+- users/:id [GET][JWT]: returns user with specified id
+- users/remove/:id [POST][JWT]: deletes specified user from the table  
 
-Add JWT functionality as shown in the course. Make sure that JWTs are required for the routes listed in `REQUIUREMENTS.md`.
+### 2. http://localhost:3000/products
+- products/ [GET]: returns all products
+- products/:id [GET]: returns specific product
+- products/ [POST][JWT]: inserts the product object inside the request.body, into the DB  
 
-### 6. QA and `README.md`
+    **product Object Example**: {"id": "1", "name": "product1", "price": "200", "token": "token from user creation goes here"}
 
-Before submitting, make sure that your project is complete with a `README.md`. Your `README.md` must include instructions for setting up and running your project including how you setup, run, and connect to your database. 
+- products/remove/:id [POST][JWT]: removes specified product  
 
-Before submitting your project, spin it up and test each endpoint. If each one responds with data that matches the data shapes from the `REQUIREMENTS.md`, it is ready for submission!
+### 3. http://localhost:3000/orders
+
+- orders/:user_id [GET][JWT]: returns all orders made by a specific user
+- orders/:user_id [POST][JWT]: inserts an order associated with a specific user, into orders table  
+
+### 4. http://localhost:3000/orders_products
+- orders_products/:order_id [GET]: returns all products in an order
+- orders_products/:user_id&:order_id&:product_id&:quantity [POST]: inserts a row containing a product, its associated order, its user, its quantity
