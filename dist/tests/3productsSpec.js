@@ -35,12 +35,29 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import { productsStore } from "../models/products.js";
+import supertest from "supertest";
+import { app } from "../server.js";
 var store = new productsStore();
 var product = {
     id: 1,
     name: "testingproduct",
     price: 250
 };
+var request = supertest(app);
+describe("endpoint response", function () {
+    it("gets the api endpoint", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request.get("/products")];
+                case 1:
+                    response = _a.sent();
+                    expect(response.status).toBe(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
 describe("Products Model", function () {
     it('Has index, create, delete, read', function () {
         //@ts-ignore
@@ -87,7 +104,6 @@ describe("Products Model", function () {
                 case 0: return [4 /*yield*/, store.read('1')];
                 case 1:
                     result = _a.sent();
-                    console.log("READ: " + result);
                     result.price = Number(result.price);
                     expect(result).toEqual({
                         id: 1,

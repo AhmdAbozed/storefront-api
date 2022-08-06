@@ -53,7 +53,6 @@ var productsStore = /** @class */ (function () {
                     case 2:
                         results = _a.sent();
                         conn.release();
-                        console.log("MOD INDEX: " + results.rows);
                         //@ts-ignore
                         return [2 /*return*/, results.rows];
                     case 3:
@@ -80,7 +79,6 @@ var productsStore = /** @class */ (function () {
                     case 2:
                         results = _a.sent();
                         conn.release();
-                        console.log("MOD PRODUCT CREATE: " + results.rows[0]);
                         //@ts-ignore
                         return [2 /*return*/, results.rows[0]];
                     case 3:

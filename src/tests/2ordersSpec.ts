@@ -1,6 +1,15 @@
 import { order, ordersStore } from "../models/orders.js"
 import { user,usersStore } from "../models/users.js";
+import { app } from "../server.js";
+import supertest from "supertest";
 
+const request = supertest(app);
+describe("endpoint response", () => {
+  it("gets the api endpoint", async () => {
+    const response = await request.get("/orders");
+    expect(response.status).toBe(401);
+  });
+});
 
 const store = new ordersStore();
 

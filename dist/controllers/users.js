@@ -52,12 +52,12 @@ var create = function (req, res) { return __awaiter(void 0, void 0, void 0, func
                     lastName: req.body.lastName,
                     password: req.body.password
                 };
-                console.log(user);
                 return [4 /*yield*/, store.create(user)];
             case 1:
                 suser = _a.sent();
                 token = jwt.sign({ user: suser }, tokenSecret);
-                res.send(token);
+                res.setHeader('Authorization', "Bearer ".concat(token));
+                res.send(suser);
                 return [3 /*break*/, 3];
             case 2:
                 err_1 = _a.sent();
@@ -90,7 +90,6 @@ var remove = function (req, res) { return __awaiter(void 0, void 0, void 0, func
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                console.log(req.params.id);
                 return [4 /*yield*/, store.delete(req.params.id)];
             case 1:
                 user = _a.sent();
@@ -109,7 +108,6 @@ var read = function (req, res) { return __awaiter(void 0, void 0, void 0, functi
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                console.log(req.params.id);
                 return [4 /*yield*/, store.read(req.params.id)];
             case 1:
                 user = _a.sent();
@@ -124,9 +122,13 @@ var read = function (req, res) { return __awaiter(void 0, void 0, void 0, functi
 }); };
 var verifyAuthToken = function (req, res, next) {
     try {
-        var token = req.body.token;
-        var decoded = jwt.verify(token, tokenSecret);
-        next();
+        if (req.headers.authorization) {
+            var token = req.headers.authorization.split(' ')[1];
+            var decoded = jwt.verify(token, tokenSecret);
+            next();
+        }
+        else
+            throw ("error");
     }
     catch (error) {
         res.status(401);

@@ -35,6 +35,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import { orders_productsStore } from "../models/orders_products.js";
+import supertest from "supertest";
+import { app } from "../server.js";
 var store = new orders_productsStore();
 var order_product = {
     id: 1,
@@ -42,6 +44,21 @@ var order_product = {
     order_id: 1,
     product_id: 1,
 };
+var request = supertest(app);
+describe("endpoint response", function () {
+    it("gets the api endpoint", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request.get("/orders_products")];
+                case 1:
+                    response = _a.sent();
+                    expect(response.status).toBe(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
 describe("orders Model", function () {
     it('create method should create order_product row', function () { return __awaiter(void 0, void 0, void 0, function () {
         var result;
@@ -50,7 +67,6 @@ describe("orders Model", function () {
                 case 0: return [4 /*yield*/, store.create('1', '1', '1', '1')];
                 case 1:
                     result = _a.sent();
-                    console.log("CREATE ORDER PRODUCT: " + result);
                     expect(result.user_id).toEqual(1);
                     return [2 /*return*/];
             }
@@ -63,8 +79,6 @@ describe("orders Model", function () {
                 case 0: return [4 /*yield*/, store.productsByOrder('1')];
                 case 1:
                     result = _a.sent();
-                    console.log("orders_products test result: " + result);
-                    console.log("orders_products test result: " + result[0]);
                     expect(result[0]).toBeDefined();
                     return [2 /*return*/];
             }

@@ -8,7 +8,7 @@ dotenv.config()
 
 const store = new usersStore()
 
-const {tokenSecret} = process.env
+const { tokenSecret } = process.env
 
 const create = async (req: Request, res: Response) => {
   try {
@@ -18,9 +18,11 @@ const create = async (req: Request, res: Response) => {
       lastName: req.body.lastName,
       password: req.body.password
     }
+
     const suser = await store.create(user)
-    const token = jwt.sign({user: suser}, tokenSecret as string)
-    res.send(token);
+    const token = jwt.sign({ user: suser }, tokenSecret as string)
+    res.setHeader('Authorization', `Bearer ${token}`)
+    res.send(suser);
   }
   catch (err) {
     throw new Error(`user creation error:${err}`)
@@ -61,22 +63,25 @@ const read = async (req: Request, res: Response) => {
   }
 }
 
-const verifyAuthToken = (req: Request, res: Response, next: ()=>void) => {
+const verifyAuthToken = (req: Request, res: Response, next: () => void) => {
   try {
-      const token = req.body.token
+
+    if (req.headers.authorization) {
+      const token: string = req.headers.authorization.split(' ')[1]
       const decoded = jwt.verify(token, tokenSecret as string)
       next()
+    } else throw("error");
   } catch (error) {
-      res.status(401)
-      res.send("JWT auth failed.")
+    res.status(401)
+    res.send("JWT auth failed.")
   }
 }
 
-const usersRoutes = (app: express.Application)=>{
+const usersRoutes = (app: express.Application) => {
   app.get('/users', verifyAuthToken, index);
   app.get('/users/:id', verifyAuthToken, read);
   app.post('/users', create);
   app.post('/users/remove/:id', verifyAuthToken, remove);
 }
 
-export  {usersRoutes, verifyAuthToken}
+export { usersRoutes, verifyAuthToken }

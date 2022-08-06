@@ -48,7 +48,6 @@ var create = function (req, res) { return __awaiter(void 0, void 0, void 0, func
                     name: req.body.name,
                     price: req.body.price
                 };
-                console.log(product);
                 return [4 /*yield*/, store.create(product)];
             case 1:
                 sproduct = _a.sent();
@@ -85,7 +84,6 @@ var remove = function (req, res) { return __awaiter(void 0, void 0, void 0, func
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                console.log(req.params.id);
                 return [4 /*yield*/, store.delete(req.params.id)];
             case 1:
                 product = _a.sent();
@@ -104,7 +102,6 @@ var read = function (req, res) { return __awaiter(void 0, void 0, void 0, functi
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                console.log(req.params.id);
                 return [4 /*yield*/, store.read(req.params.id)];
             case 1:
                 product = _a.sent();
