@@ -14,7 +14,7 @@
     "migrateUpTest": "cross-env ENV=test db-migrate --env test up",
     "migrateDownTest": "cross-env ENV=test db-migrate --env test down",
     "test": "tsc && jasmine",
-    "migrateTest": "npm run migrateUpTest && (npm run test || npm run migrateDownTest) && npm run migrateDownTest"
+    "migrateTest": "npm run build && npm run migrateUpTest && (npm run test || npm run migrateDownTest) && npm run migrateDownTest"
   },
   "author": "Udacity",
   "license": "ISC",
