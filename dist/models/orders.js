@@ -53,7 +53,6 @@ var ordersStore = /** @class */ (function () {
                     case 2:
                         results = _a.sent();
                         conn.release();
-                        console.log("MOD ORDER CREATE: " + results.rows[0]);
                         //@ts-ignore
                         return [2 /*return*/, results.rows[0]];
                     case 3:
@@ -79,7 +78,6 @@ var ordersStore = /** @class */ (function () {
                     case 2:
                         results = _a.sent();
                         conn.release();
-                        console.log("MOD ORDERS: " + results.rows);
                         //@ts-ignore
                         return [2 /*return*/, results.rows];
                     case 3:

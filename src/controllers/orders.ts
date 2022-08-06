@@ -6,6 +6,15 @@ import { verifyAuthToken } from "./users.js"
 
 const store = new ordersStore()
 
+const endpoint = async (req: Request, res: Response)=>{
+  try{
+    res.send("Orders endpoint")
+  }
+  catch (err) {
+    throw new Error(`order endpoint error:${err}`)
+  }
+}
+
 const create = async (req: Request, res: Response) => {
   try {
     const sproduct = await store.create(req.params.user_id, "active")
@@ -29,6 +38,7 @@ const ordersByUser = async (req: Request, res: Response) => {
   }
 
   const productsRoutes = (app: express.Application)=>{
+    app.get('/orders/', verifyAuthToken, endpoint )
     app.get('/orders/:id', verifyAuthToken, ordersByUser);
     app.post('/orders/:user_id', verifyAuthToken, create);
   }

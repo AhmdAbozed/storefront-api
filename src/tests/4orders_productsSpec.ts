@@ -1,4 +1,6 @@
 import { order_product, orders_productsStore } from "../models/orders_products.js"
+import supertest from "supertest";
+import {app} from "../server.js"
 
 const store = new orders_productsStore();
 
@@ -8,6 +10,15 @@ const order_product: order_product = {
     order_id: 1,
     product_id: 1,    
 }
+
+const request = supertest(app);
+
+describe("endpoint response", () => {
+  it("gets the api endpoint", async () => {
+    const response = await request.get("/orders_products");
+    expect(response.status).toBe(200);
+  });
+});
 
 describe("orders Model", ()=>{
 

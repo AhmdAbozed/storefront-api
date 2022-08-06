@@ -36,6 +36,23 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 import { ordersStore } from "../models/orders.js";
 import { usersStore } from "../models/users.js";
+import { app } from "../server.js";
+import supertest from "supertest";
+var request = supertest(app);
+describe("endpoint response", function () {
+    it("gets the api endpoint", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request.get("/orders")];
+                case 1:
+                    response = _a.sent();
+                    expect(response.status).toBe(401);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
 var store = new ordersStore();
 var userStore = new usersStore();
 var user = {
@@ -52,7 +69,6 @@ describe("orders Model", function () {
                 case 0: return [4 /*yield*/, store.create('1', 'active')];
                 case 1:
                     result = _a.sent();
-                    console.log("READ: " + result);
                     expect(result.user_id).toEqual(1);
                     return [2 /*return*/];
             }

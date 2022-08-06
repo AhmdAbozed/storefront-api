@@ -16,3 +16,4 @@ catalog(app);
 app.listen(3000, function () {
     console.log("starting app on: ".concat(address));
 });
+export { app };

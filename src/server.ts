@@ -22,3 +22,5 @@ catalog(app);
 app.listen(3000, function () {
     console.log(`starting app on: ${address}`)
 })
+
+export {app}

@@ -37,6 +37,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 import { ordersStore } from "../models/orders.js";
 import { verifyAuthToken } from "./users.js";
 var store = new ordersStore();
+var endpoint = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        try {
+            res.send("Orders endpoint");
+        }
+        catch (err) {
+            throw new Error("order endpoint error:".concat(err));
+        }
+        return [2 /*return*/];
+    });
+}); };
 var create = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var sproduct, err_1;
     return __generator(this, function (_a) {
@@ -61,7 +72,6 @@ var ordersByUser = function (req, res) { return __awaiter(void 0, void 0, void 0
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                console.log(req.params.id);
                 return [4 /*yield*/, store.ordersByUser(req.params.id)];
             case 1:
                 product = _a.sent();
@@ -75,6 +85,7 @@ var ordersByUser = function (req, res) { return __awaiter(void 0, void 0, void 0
     });
 }); };
 var productsRoutes = function (app) {
+    app.get('/orders/', verifyAuthToken, endpoint);
     app.get('/orders/:id', verifyAuthToken, ordersByUser);
     app.post('/orders/:user_id', verifyAuthToken, create);
 };

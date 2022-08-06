@@ -57,7 +57,6 @@ var usersStore = /** @class */ (function () {
                     case 2:
                         results = _a.sent();
                         conn.release();
-                        console.log("MOD USER INDEX: " + results.rows);
                         //@ts-ignore
                         return [2 /*return*/, results.rows];
                     case 3:
@@ -75,18 +74,15 @@ var usersStore = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        console.log("gotten user at creation: " + JSON.stringify(user));
                         return [4 /*yield*/, client.connect()];
                     case 1:
                         conn = _a.sent();
                         hash = bcrypt.hashSync(user.password + pepper, Number(saltRounds));
-                        console.log("hashish " + hash);
                         sql = 'INSERT INTO users ("firstName", "lastName", "password") VALUES ($1, $2, $3) RETURNING *';
                         return [4 /*yield*/, conn.query(sql, [user.firstName, user.lastName, hash])];
                     case 2:
                         results = _a.sent();
                         conn.release();
-                        console.log("MOD USER CREATE: " + results.rows[0]);
                         //@ts-ignore
                         return [2 /*return*/, results.rows[0]];
                     case 3:
@@ -112,7 +108,6 @@ var usersStore = /** @class */ (function () {
                     case 2:
                         results = _a.sent();
                         conn.release();
-                        console.log("MOD USERS READ: " + results.rows[0]);
                         //@ts-ignore
                         return [2 /*return*/, results.rows[0]];
                     case 3:

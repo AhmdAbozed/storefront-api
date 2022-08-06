@@ -35,6 +35,23 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import { usersStore } from "../models/users.js";
+import supertest from "supertest";
+import { app } from "../server.js";
+var request = supertest(app);
+describe("endpoint response", function () {
+    it("gets the api endpoint", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request.get("/users")];
+                case 1:
+                    response = _a.sent();
+                    expect(response.status).toBe(401);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
 var store = new usersStore();
 var user = {
     id: 1,
@@ -90,7 +107,6 @@ describe("users Model", function () {
                 case 0: return [4 /*yield*/, store.read('1')];
                 case 1:
                     result = _a.sent();
-                    console.log("USER TEST READ: " + result);
                     pass = result.password;
                     expect(result).toEqual({
                         id: 1,
