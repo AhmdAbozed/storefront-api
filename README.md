@@ -9,6 +9,7 @@
 - jsonwebtoken from npm for working with JWTs
 - jasmine from npm for testing
 - bcrypt from npm for hashing
+- supertest for endpoint testing
 
 ## Scripts
 - DB:  creates the development DB, named store_front_db
@@ -37,7 +38,7 @@
 
 8. Use Postman to send the post requests, as well as access pages requiring JWT. Otherwise browser can be used.
 
-9. create a user then add the response's token to requests requiring JWT
+9. create a user then add the response's token to Authorization header when requested by endpoint
 
 ## Endpoints
 
