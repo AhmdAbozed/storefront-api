@@ -29,7 +29,7 @@
     PG_DB=store_front_db  
     PG_TEST_DB=store_test_db  
     PG_USER=(PSQL username)  
-    PG_PASS=(PSQL password)
+    PG_PASS=(PSQL password)  
     ENV=test  
     bcryptPass=cryptionpass  
     saltRounds=8  
