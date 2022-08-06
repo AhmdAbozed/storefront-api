@@ -23,21 +23,34 @@
 ## Instructions
 1. Run npm i, to install all the packages
 
-2. Set the PG_HOST, PG_USER, PG_PASS in .env and database.json
+2. create an .env file with the following:  
+    PG_HOST=localhost  
+    PG_DB=store_front_db  
+    PG_TEST_DB=store_test_db  
+    PG_USER=(PSQL username)  
+    PG_PASS=(PSQL password)
+    ENV=test  
+    bcryptPass=cryptionpass  
+    saltRounds=8  
+    tokenSecret=secretToken  
+    pepper=prepper  
+    hostport=3000  
 
-3. Run the script: DB, to create the main database.
+3. Set the DB port(Set to 5432 by default), as well as the user and password in database.json
 
-4. Run the script: testDB, to create the testing database.
+4. Run the script: DB, to create the main database.
 
-5. Run the script: migrateUp, for the up migrations
+5. Run the script: testDB, to create the testing database.
 
-6. Run the script: build, for ts building
+6. Run the script: migrateUp, for the up migrations
 
-7. Run the script: start, for starting the server
+7. Run the script: build, for ts building
 
-8. Use Postman to send the post requests, as well as access pages requiring JWT. Otherwise browser can be used.
+8. Run the script: start, for starting the server
 
-9. create a user then add the response's token to requests requiring JWT
+9. Use Postman to send the post requests, as well as access pages requiring JWT. Otherwise browser can be used.
+
+10. create a user then add the response's token to requests requiring JWT
 
 ## Endpoints
 

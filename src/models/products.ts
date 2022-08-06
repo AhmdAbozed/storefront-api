@@ -24,7 +24,7 @@ export class productsStore {
 
     async create(product: product): Promise<product> {
         try {
-            console.log("gotten product at creation: " + JSON.stringify(product))
+
             const conn = await client.connect();
             const sql = 'INSERT INTO products (name, price) VALUES ($1, $2) RETURNING *';
             const results = await conn.query(sql, [product.name, product.price]);

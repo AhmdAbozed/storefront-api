@@ -10,13 +10,15 @@
       "host": "localhost",
       "database": "store_front_db",
       "user": "postgres",
-      "password": "passageword"
+      "password": "passageword",
+      "port":"5432"
     },
     "test": {
       "driver": "pg",
       "host": "localhost",
       "database": "store_test_db",
       "user": "postgres",
-      "password": "passageword"
+      "password": "passageword",
+      "port":"5432"
     }
   }
