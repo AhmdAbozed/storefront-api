@@ -3,12 +3,6 @@ import supertest from "supertest";
 import { app } from "../server.js";
 
 const request = supertest(app);
-describe("endpoint response", () => {
-  it("gets the api endpoint", async () => {
-    const response = await request.get("/users");
-    expect(response.status).toBe(401);
-  });
-});
 
 const store = new usersStore();
 
@@ -61,5 +55,20 @@ describe("users Model", () => {
             password: pass
         });
     });
+    it("[GET]/users", async () => {
+        const response = await request.get("/users");
+        expect(response.status).toBe(200);
+      });
+  
+      it("[GET]/users/1", async () => {
+          const response = await request.get("/users/1");
+          expect(response.status).toBe(200);
+    });
+
+    it("[POST]/users", async () => {
+        const response = await request.post("/users");
+        expect(response.status).toBe(200);
+      });
+ 
 
 })

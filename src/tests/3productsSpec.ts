@@ -1,6 +1,6 @@
 import { product, productsStore } from "../models/products.js"
 import supertest from "supertest";
-import {app} from "../server.js"
+import { app } from "../server.js"
 const store = new productsStore();
 
 const product: product = {
@@ -12,14 +12,14 @@ const product: product = {
 const request = supertest(app);
 
 describe("endpoint response", () => {
-  it("gets the api endpoint", async () => {
-    const response = await request.get("/products");
-    expect(response.status).toBe(200);
-  });
+    it("gets the api endpoint", async () => {
+        const response = await request.get("/products");
+        expect(response.status).toBe(200);
+    });
 });
 
-describe("Products Model", ()=>{
-    it('Has index, create, delete, read', ()=>{
+describe("Products Model", () => {
+    it('Has index, create, delete, read', () => {
         //@ts-ignore
         expect(store.index && store.create && store.read).toBeDefined();
     })
@@ -36,7 +36,7 @@ describe("Products Model", ()=>{
 
     it('index method should return products', async () => {
         const result = await store.index();
-        
+
         result[0].price = Number(result[0].price)
 
         expect(result[0]).toEqual({
@@ -58,4 +58,19 @@ describe("Products Model", ()=>{
         });
     });
 
+    it("[GET]/products", async () => {
+        const response = await request.get("/products");
+        expect(response.status).toBe(200);
+    });
+
+    it("[GET]/products/1", async () => {
+        const response = await request.get("/products/1");
+        expect(response.status).toBe(200);
+    });
+
+
+    it("[POST]/products", async () => {
+        const response = await request.post("/products");
+        expect(response.status).toBe(200);
+    });
 })

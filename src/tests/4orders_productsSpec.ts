@@ -1,14 +1,14 @@
 import { order_product, orders_productsStore } from "../models/orders_products.js"
 import supertest from "supertest";
-import {app} from "../server.js"
+import { app } from "../server.js"
 
 const store = new orders_productsStore();
 
 const order_product: order_product = {
-    id: 1,
-    user_id: 1,
-    order_id: 1,
-    product_id: 1,    
+  id: 1,
+  user_id: 1,
+  order_id: 1,
+  product_id: 1,
 }
 
 const request = supertest(app);
@@ -20,15 +20,24 @@ describe("endpoint response", () => {
   });
 });
 
-describe("orders Model", ()=>{
+describe("orders Model", () => {
 
-    it('create method should create order_product row', async () => {
-        const result = await store.create('1','1','1', '1');
-        expect(result.user_id).toEqual(1)
-    });
+  it('create method should create order_product row', async () => {
+    const result = await store.create('1', '1', '1', '1');
+    expect(result.user_id).toEqual(1)
+  });
 
-    it('productsByOrder method should return products in an order', async () => {
-        const result = await store.productsByOrder('1');
-        expect(result[0]).toBeDefined(); 
-    })
+  it('productsByOrder method should return products in an order', async () => {
+    const result = await store.productsByOrder('1');
+    expect(result[0]).toBeDefined();
+  })
+
+  it("[GET]/orders_products/1", async () => {
+    const response = await request.get("/orders_products/1");
+    expect(response.status).toBe(200);
+  });
+  it("[POST]/orders_products/1&1&1&1", async () => {
+    const response = await request.post("/orders_products/1&1&1&1");
+    expect(response.status).toBe(200);
+  });
 })

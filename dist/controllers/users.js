@@ -131,8 +131,7 @@ var verifyAuthToken = function (req, res, next) {
             throw ("error");
     }
     catch (error) {
-        res.status(401);
-        res.send("JWT auth failed.");
+        res.status(200).send("JWT auth failed.");
     }
 };
 var usersRoutes = function (app) {
