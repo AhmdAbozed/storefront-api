@@ -65,21 +65,19 @@ const read = async (req: Request, res: Response) => {
 
 const verifyAuthToken = (req: Request, res: Response, next: () => void) => {
   try {
-
-    if (req.headers.authorization) {
+      if (req.headers.authorization) {
       const token: string = req.headers.authorization.split(' ')[1]
       const decoded = jwt.verify(token, tokenSecret as string)
       next()
     } else throw("error");
   } catch (error) {
-    res.status(401)
-    res.send("JWT auth failed.")
+    res.status(200).send("JWT auth failed.")
   }
 }
 
 const usersRoutes = (app: express.Application) => {
   app.get('/users', verifyAuthToken, index);
-  app.get('/users/:id', verifyAuthToken, read);
+  app.get('/users/:id',verifyAuthToken, read);
   app.post('/users', create);
   app.post('/users/remove/:id', verifyAuthToken, remove);
 }

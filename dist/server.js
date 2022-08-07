@@ -2,6 +2,9 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import catalog from './routes/catalog.js';
 import cors from 'cors';
+import dotenv from 'dotenv';
+dotenv.config();
+var port = process.env.backendPort;
 var app = express();
 var address = "http://localhost:3000";
 var corsOptions = {
@@ -9,11 +12,8 @@ var corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
-app.get('/', function (req, res) {
-    res.send('the day ive decided to be is why i go through any of this');
-});
 catalog(app);
-app.listen(3000, function () {
+app.listen(port, function () {
     console.log("starting app on: ".concat(address));
 });
 export { app };

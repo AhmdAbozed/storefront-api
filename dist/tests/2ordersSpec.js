@@ -47,7 +47,7 @@ describe("endpoint response", function () {
                 case 0: return [4 /*yield*/, request.get("/orders")];
                 case 1:
                     response = _a.sent();
-                    expect(response.status).toBe(401);
+                    expect(response.status).toBe(200);
                     return [2 /*return*/];
             }
         });
@@ -85,6 +85,30 @@ describe("orders Model", function () {
                 case 2:
                     result = _a.sent();
                     expect(result[0]).toBeDefined();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it("[GET]/orders/1", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request.get("/orders/1")];
+                case 1:
+                    response = _a.sent();
+                    expect(response.status).toBe(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it("[POST]/orders/1", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request.post("/orders/1")];
+                case 1:
+                    response = _a.sent();
+                    expect(response.status).toBe(200);
                     return [2 /*return*/];
             }
         });

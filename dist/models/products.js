@@ -70,7 +70,6 @@ var productsStore = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        console.log("gotten product at creation: " + JSON.stringify(product));
                         return [4 /*yield*/, client.connect()];
                     case 1:
                         conn = _a.sent();
