@@ -1,5 +1,5 @@
 # Storefront Backend Project
-
+### A project udacity's Advanced full-stack web dev course.
 ## Required Technologies
 
 - Postgres for the database
